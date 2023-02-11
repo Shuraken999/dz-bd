@@ -1,0 +1,45 @@
+create table if not exists Executor (
+	ID serial primary key,
+	Name varchar(60) not null
+);
+create table if not exists Genre (
+	ID serial primary key,
+	Name varchar(60) not null
+);
+create table if not exists Album (
+	ID serial primary key,
+	Name varchar(60) not null,
+	year_album integer not null	
+);
+create table if not exists Track (
+	ID serial primary key,
+	Name varchar(60) not null,
+	Time_track integer not null,
+	Album integer not null references Album(ID)
+);
+create table if not exists Genre_Executor (
+	Genre_ID integer references Genre(ID),
+	Executor_ID integer references Executor(ID),
+	constraint PK_Genre primary key (Genre_ID, Executor_ID)
+);
+create table if not exists Album_Executor (
+	Album_ID integer references Album(ID),
+	Executor_ID integer references Executor(ID),
+	constraint PK_Album primary key (Album_ID, Executor_ID)
+);
+create table if not exists Collection (
+	ID serial primary key,
+	Name varchar(60) not null,
+	year_collection integer not null	
+);
+create table if not exists Collection_Track (
+	Collection_ID integer references Collection(ID),
+	Track_ID integer references Track(ID),
+	constraint PK_Collection primary key (Collection_ID, Track_ID)
+);
+create table if not exists Employee (
+	ID serial primary key,
+	Name varchar(60) not null,
+	Department varchar(60) not null,
+	Chief integer references Employee(ID)
+);
