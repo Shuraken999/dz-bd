@@ -43,7 +43,9 @@ VALUES('Life', '00:03:07', '1'),
 ('Drain You', '00:03:46', '7'), 
 ('About A Girl', '00:03:13', '7'),
 ('Make Love', '00:04:49', '8'),
-('The Brainwasher', '00:04:08', '8');
+('The Brainwasher', '00:04:08', '8'),
+('Breed', '00:03:11', '7'),
+('Polly', '00:03:03', '7');
 
 INSERT
 	INTO
