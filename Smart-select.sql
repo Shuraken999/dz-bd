@@ -1,4 +1,4 @@
---Запрос №1
+﻿--Запрос №1
 SELECT 
 	g.name, COUNT(executor_id)
 FROM 
@@ -31,16 +31,20 @@ ORDER BY
 	AVG(t.time_track);
 --Запрос №4
 SELECT 
-	e.name 
+	e2.name
+FROM executor e2
+WHERE (
+SELECT 
+	e.id 
 FROM 
 	executor e 
 JOIN album_executor ae  ON ae.executor_id = e.id
 JOIN album a ON ae.album_id = a.id
-WHERE NOT a.year_album = 2020
-GROUP BY e.name;
+WHERE a.year_album = 2020
+) <> e2.id;
 --Запрос №5
 SELECT 
-	c.name, COUNT(e.name)   
+	DISTINCT c.name
 FROM 
 	collection c
 JOIN collection_track ct ON ct.collection_id = c.id
@@ -48,8 +52,7 @@ JOIN track t ON ct.track_id = t.id
 JOIN album a ON t.album = a.id
 JOIN album_executor ae ON ae.album_id = a.id
 JOIN executor e ON e.id = ae.executor_id
-WHERE e.name = 'Zivert' 
-GROUP BY c.name;
+WHERE e.name = 'Zivert';
 --Запрос №6
 SELECT 
 	COUNT(e.name), a.name
@@ -66,7 +69,6 @@ SELECT
 FROM 
 	track t
 JOIN collection_track ct ON ct.track_id = t.id
-JOIN collection c ON c.id = ct.collection_id
 WHERE ct.collection_id IS NULL;
 --Запрос №8
 SELECT 
@@ -80,10 +82,17 @@ WHERE t.time_track = (SELECT min(time_track) FROM track )
 GROUP BY e.name;
 --Запрос №9
 SELECT 
-	a.name, count(*) 
+	a2.name, count(*) 
+FROM 
+	album a2 
+JOIN track t2 ON t2.album = a2.id 
+GROUP BY a2.name
+HAVING count(*)  = (
+SELECT 
+	count(*) 
 FROM 
 	album a 
 JOIN track t ON t.album = a.id 
 GROUP BY a.name
-ORDER BY count(*) LIMIT 1;
-
+ORDER BY count(*) LIMIT 1
+);
