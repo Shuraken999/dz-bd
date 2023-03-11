@@ -38,8 +38,10 @@ for name_book in session.query(Book).join(Book.publisher).filter(Publisher.id ==
     stock_id = session.query(Stock.id).join(title_book, Stock.id_book == title_book.c.id).subquery()
     shop_id = session.query(Stock.id_shop).join(title_book, Stock.id_book == title_book.c.id).subquery()
     for name_shop in session.query(Shop).join(shop_id, Shop.id == shop_id.c.id_shop).all():
-        for sale_info in session.query(Sale).join(stock_id, Sale.id_stock == stock_id.c.id).all():
-            print(f' {name_book} | {name_shop} | {sale_info}')
+        name_shop2 = name_shop
+    for sale_info in session.query(Sale).join(stock_id, Sale.id_stock == stock_id.c.id).all():
+        sale_info2 = sale_info
+    print(f' {name_book} | {name_shop2} | {sale_info2}')
 session.commit()
 
 session.close()
